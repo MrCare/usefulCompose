@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: caasLab
+      MONGO_INITDB_ROOT_PASSWORD: caasLab2024
+      MONGO_INITDB_DATABASE: caas
+    volumes:
+      - ./data/mongo:/data/db
+  mongo-express:
+      image: mongo-express
+      container_name: mongo-express_container
+      ports:
+        - "8081:8081"
+      environment:
+        ME_CONFIG_MONGODB_ADMINUSERNAME: caasLab
+        ME_CONFIG_MONGODB_ADMINPASSWORD: caasLab2024
+        ME_CONFIG_MONGODB_SERVER: mongo
+      depends_on:
+        - mongo
+
+volumes:
+  mongodb_data:
+    driver: local
